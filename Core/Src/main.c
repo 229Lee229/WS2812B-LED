@@ -106,6 +106,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM2_Init();
   MX_SPI2_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 	// Enable TIM3
 //	HAL_TIM_Base_Start_IT(&htim3);				// Frequency : 1kHz ; Pulse : 50%

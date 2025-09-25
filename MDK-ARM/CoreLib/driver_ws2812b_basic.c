@@ -51,7 +51,7 @@ uint8_t ws2812b_basic_init(void)
     uint8_t res;
     
     /* link interface function */
-//    DRIVER_WS2812B_LINK_INIT(&gs_handle, ws2812b_handle_t);
+	  DRIVER_WS2812B_LINK_INIT(&gs_handle, ws2812b_handle_t);
 //    DRIVER_WS2812B_LINK_SPI_10MHZ_INIT(&gs_handle, ws2812b_interface_spi_10mhz_init);
 //    DRIVER_WS2812B_LINK_SPI_DEINIT(&gs_handle, ws2812b_interface_spi_deinit);
 //    DRIVER_WS2812B_LINK_SPI_WRITE_COMMAND(&gs_handle, ws2812b_interface_spi_write_cmd);
