@@ -111,14 +111,15 @@ int main(void)
 	// Enable TIM3
 //	HAL_TIM_Base_Start_IT(&htim3);				// Frequency : 1kHz ; Pulse : 50%
 	 HAL_TIM_Base_Start_IT(&htim2);				// Enable TIM2 Timing 1s
-	   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, GPIO_PIN_SET);
-
-
+	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, GPIO_PIN_SET);
+	
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 //	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  WS2812_SetPulse(&htim1,0);
   while (1)
   {
     /* USER CODE END WHILE */

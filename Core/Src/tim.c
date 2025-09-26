@@ -21,7 +21,16 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-
+void WS2812_SetPulse(TIM_HandleTypeDef *htim, uint8_t bit) {
+    TIM_OC_InitTypeDef sConfigOC = {0};
+    sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    sConfigOC.Pulse = (bit ? 43 : 21);  // ????? (32 for 0, 66 for 1)
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    HAL_TIM_PWM_ConfigChannel(htim, &sConfigOC, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1);  // ?? PWM
+}
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim1;
@@ -45,9 +54,9 @@ void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 64;
+  htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 98;
+  htim1.Init.Period = 64;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;

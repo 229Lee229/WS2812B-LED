@@ -29,6 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
+void WS2812_SetPulse(TIM_HandleTypeDef *htim, uint8_t bit);
 
 /* USER CODE END Includes */
 
