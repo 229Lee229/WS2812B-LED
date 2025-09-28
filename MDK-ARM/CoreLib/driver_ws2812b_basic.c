@@ -37,6 +37,7 @@
 
 #include "driver_ws2812b_basic.h"
 #include "driver_ws2812b.h"
+#include "tim.h"
 static ws2812b_handle_t gs_handle;        /**< ws2812b handle */
 
 /**
@@ -52,9 +53,9 @@ uint8_t ws2812b_basic_init(void)
     
     /* link interface function */
 	  DRIVER_WS2812B_LINK_INIT(&gs_handle, ws2812b_handle_t);
-//    DRIVER_WS2812B_LINK_SPI_10MHZ_INIT(&gs_handle, ws2812b_interface_spi_10mhz_init);
+	  DRIVER_WS2812B_LINK_SPI_10MHZ_INIT(&gs_handle, MX_TIM1_Init);
 //    DRIVER_WS2812B_LINK_SPI_DEINIT(&gs_handle, ws2812b_interface_spi_deinit);
-//    DRIVER_WS2812B_LINK_SPI_WRITE_COMMAND(&gs_handle, ws2812b_interface_spi_write_cmd);
+//	  DRIVER_WS2812B_LINK_SPI_WRITE_COMMAND(&gs_handle, ws2812b_interface_spi_write_cmd);
 //    DRIVER_WS2812B_LINK_DELAY_MS(&gs_handle, ws2812b_interface_delay_ms);
 //    DRIVER_WS2812B_LINK_DEBUG_PRINT(&gs_handle, ws2812b_interface_debug_print);
     
@@ -110,4 +111,29 @@ uint8_t ws2812b_basic_deinit(void)
     {
         return 0;
     }
+}
+
+int8_t ws2812b_interface_spi_write_cmd(uint8_t *buf, uint16_t len) {
+    /* check param */
+    if (buf == NULL || len == 0) {
+        return 1; // fail, invalid param
+    }
+
+    /* calculate 每个灯珠3个字节*/
+    uint16_t led_count = len / 3;
+    if (len % 3 != 0) {
+        return 1; // fail
+    }
+
+    /* SPI ?? */
+    for (uint16_t i = 0; i < len; i++) {
+//        if (spi_transmit(buf[i]) != 0) { // ?? spi_transmit ? SPI ????
+//            return -1; // ??:SPI ????
+//        }
+    }
+
+    /* ??????(????? 50祍) */
+    // spi_reset(); // ?? spi_reset ??????
+
+    return 0; // ??
 }

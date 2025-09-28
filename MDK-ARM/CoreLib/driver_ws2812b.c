@@ -93,7 +93,7 @@ uint8_t ws2812b_init(ws2812b_handle_t *handle)
         return 3;                                                        /* return error */
     }
     
-    if (handle->spi_10mhz_init() != 0)                                   /* spi init */
+    if (handle->spi_10mhz_init != 0)                                   /* spi init */
     {
         handle->debug_print("ws2812b: spi init failed.\n");              /* spi init failed */
        

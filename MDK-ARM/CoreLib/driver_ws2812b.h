@@ -68,7 +68,7 @@ extern "C" {
  */
 typedef struct ws2812b_handle_s
 {
-    uint8_t (*spi_10mhz_init)(void);                             /**< point to a spi_10mhz_init function address */
+    /* uint8_t */ void (*spi_10mhz_init)(void);                             /**< point to a spi_10mhz_init function address */
     uint8_t (*spi_deinit)(void);                                 /**< point to a spi_deinit function address */
     uint8_t (*spi_write_cmd)(uint8_t *buf, uint16_t len);        /**< point to a spi_write_cmd function address */
     void (*delay_ms)(uint32_t ms);                               /**< point to a delay_ms function address */

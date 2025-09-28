@@ -27,8 +27,8 @@
 /* USER CODE BEGIN Includes */
 #include "ws2812b_port.h"
 #include "driver_ws2812b.h"
-#define		LEDBUS_SET_BIT	 	1		
-#define		LEDBUS_RESET_BIT	0		
+#define		BUS_SET_BIT	 	1		
+#define		BUS_RESET_BIT	0		
 
 // #include "driver_ws2812b_basic.h"
 /* USER CODE END Includes */
@@ -122,7 +122,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  WS2812_SetPulse(&htim1,LEDBUS_SET_BIT);
+  // WS2812_SetPulse(&htim1,BUS_SET_BIT);
   while (1)
   {
     /* USER CODE END WHILE */
