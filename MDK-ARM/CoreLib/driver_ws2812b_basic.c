@@ -120,7 +120,7 @@ int8_t ws2812b_interface_spi_write_cmd(uint8_t *buf, uint16_t len) {
     }
 
     /* calculate 每个灯珠3个字节*/
-    uint16_t led_count = len / 3;
+    // uint16_t led_count = len / 3;
     if (len % 3 != 0) {
         return 1; // fail
     }
