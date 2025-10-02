@@ -69,6 +69,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	
 }
 
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == Key_1_Pin) {  // ? GPIO_PIN_0
+        // ??????,?? HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		
+		// Send pulse
+		WS2812_SetPulse(&htim1,BUS_SET_BIT);
+    }
+}
+
 // define TIM2-IRQ Function
 //void TIM2_IRQHandler(void)
 //{
