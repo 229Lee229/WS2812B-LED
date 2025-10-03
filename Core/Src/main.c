@@ -27,15 +27,17 @@
 /* USER CODE BEGIN Includes */
 #include "ws2812b_port.h"
 #include "driver_ws2812b.h"
-#define		BUS_SET_BIT	 	1		
-#define		BUS_RESET_BIT	0		
 
 // #include "driver_ws2812b_basic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+struct soft_timer {
+	uint32_t timeout;
+	void * args;
+	void (*func)(void *);
+};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -45,13 +47,39 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#define		BUS_SET_BIT	 	1		
+#define		BUS_RESET_BIT	0		
+#define		TOGGLE_LED()  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5);
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+int g_key_cnt = 0;
 
+void key_timeout_func(void *args);
+
+struct soft_timer key_timer = {~0, NULL, key_timeout_func};
+	
+void key_timeout_func(void *args)
+{
+	g_key_cnt++;
+	key_timer.timeout = ~0;
+}
+
+void mod_timer(struct soft_timer *pTimer, uint32_t timeout)
+{
+	pTimer->timeout = HAL_GetTick() + timeout;
+}
+
+void check_timer(void)
+{
+	if (key_timer.timeout <= HAL_GetTick())
+	{
+		key_timer.func(key_timer.args);
+	}
+}
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,7 +92,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (htim->Instance == TIM2) {
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5); // ??PA5??(LED)
+       TOGGLE_LED(); //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5); // ??PA5??(LED)
     }
 	
 }
