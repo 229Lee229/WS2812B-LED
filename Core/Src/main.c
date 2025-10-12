@@ -27,7 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "ws2812b_port.h"
 #include "driver_ws2812b.h"
-
+#include "stdbool.h"
 // #include "driver_ws2812b_basic.h"
 /* USER CODE END Includes */
 
@@ -57,11 +57,13 @@ struct soft_timer {
 
 /* USER CODE BEGIN PV */
 int g_key_cnt = 0;
+ uint8_t Flash = 0;
 
 void key_timeout_func(void *args);
 
 struct soft_timer key_timer = {~0, NULL, key_timeout_func};
-	
+struct soft_timer dimmer_1_timer = {~0, NULL, key_timeout_func};
+
 void key_timeout_func(void *args)
 {
 	g_key_cnt++;
@@ -77,7 +79,12 @@ void check_timer(void)
 {
 	if (key_timer.timeout <= HAL_GetTick())
 	{
+		Flash = 1;
 		key_timer.func(key_timer.args);
+	}
+	if (dimmer_1_timer.timeout <= HAL_GetTick()){
+		Flash = 1;
+		dimmer_1_timer.func(dimmer_1_timer.args);
 	}
 }
 /* USER CODE END PV */
@@ -90,9 +97,71 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint16_t pulse1 = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (htim->Instance == TIM2) {
        TOGGLE_LED(); //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5); // ??PA5??(LED)
+////		TIM_OC_InitTypeDef sConfigOC = {0};
+////		sConfigOC.OCMode = TIM_OCMODE_PWM1;
+////		sConfigOC.Pulse = 
+////		sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+////		sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+////		sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+////		HAL_TIM_PWM_ConfigChannel(htim, &sConfigOC, TIM_CHANNEL_1);
+////		HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1);  // ?? PWM
+//		
+//		if(pulse1 == 0){
+//			mod_timer(&dimmer_1_timer,2000);
+//			pulse1 = 1;
+//						WS2812_SetPulse(&htim1,pulse1);	
+
+//			Flash = 2;
+//		}
+//		
+//		
+//		if(pulse1 == 20){
+//			mod_timer(&key_timer,2000);
+//									WS2812_SetPulse(&htim1,pulse1);	
+
+//			// pulse1 = 0;
+//			Flash = 0;
+//			// return;
+//			// pulse1 = 1;
+////			if (key_timer.timeout <= HAL_GetTick())
+////			{
+////				pulse1 = 1;
+////			}
+////			else return;
+//		}
+////		if (key_timer.timeout <= HAL_GetTick()){
+////			;
+////		}
+////		else return;
+////		if(Flash == 1){
+////			WS2812_SetPulse(&htim1,10);		
+////		}else	WS2812_SetPulse(&htim1,0);		
+
+////		Flash = !Flash;
+//		if(Flash == 1){
+//			WS2812_SetPulse(&htim1,pulse1);	
+//			pulse1++;	
+//			if(pulse1 == 20)	pulse1 = 0;
+//		}
+		if(Flash == 0){
+			WS2812_SetPulse(&htim1,pulse1++);
+		}
+		if(pulse1 == 50)
+			Flash = 1;
+		
+		if(Flash == 1){
+			WS2812_SetPulse(&htim1,pulse1--);
+		}
+		
+		if(pulse1 == 0){
+			WS2812_SetPulse(&htim1,0);
+			Flash = 0;
+		}
+		
     }
 	
 }

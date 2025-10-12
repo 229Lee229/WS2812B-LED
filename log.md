@@ -44,3 +44,12 @@ Plan:	点灯, 测试按键控制
 
 +   如果不成立, _Static_assert()可以导致程序无法通过编译。
 +   _Static_assert要求它的第1个参数是整型常量表达式, 这保证了能在编译期求值(sizeof表达式被视为整型常量)
+
++   以下语法哪里错误
+
+    +   ```c
+        const int a = 0;
+        _Static_assert(a > 0, "false");
+        ```
+
+    +   *In C, a const int variable like a—even when initialized with a constant value—is not treated as part of a constant expression.*
