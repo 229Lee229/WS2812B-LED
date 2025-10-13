@@ -61,3 +61,9 @@ Plan:	点灯, 测试按键控制
 ### 7000D-5ch
 
 +   在占空比2%-4%中, 1k确实会产生频率声音, 在换成20k就听不到了
+
++   区别?
+
+    +   void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
+
+    +   void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
