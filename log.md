@@ -53,3 +53,11 @@ Plan:	点灯, 测试按键控制
         ```
 
     +   *In C, a const int variable like a—even when initialized with a constant value—is not treated as part of a constant expression.*
+
+
+
+
+
+### 7000D-5ch
+
++   在占空比2%-4%中, 1k确实会产生频率声音, 在换成20k就听不到了

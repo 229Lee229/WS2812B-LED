@@ -150,7 +150,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		if(Flash == 0){
 			WS2812_SetPulse(&htim1,pulse1++);
 		}
-		if(pulse1 == 50)
+		if(pulse1 == 150)
 			Flash = 1;
 		
 		if(Flash == 1){
