@@ -31,6 +31,18 @@ void WS2812_SetPulse(TIM_HandleTypeDef *htim, uint8_t pulse) {
     HAL_TIM_PWM_ConfigChannel(htim, &sConfigOC, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(htim, TIM_CHANNEL_1);  // ?? PWM
 }
+
+// LED 通道输出 (定时器x, 占空比x, 通道x)
+void LED_PWM_OUT(TIM_HandleTypeDef *htim, uint8_t pulse,uint32_t TIM_CHANNEL_x) {
+    TIM_OC_InitTypeDef sConfigOC = {0};
+    sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    sConfigOC.Pulse = pulse;// (bit ? 43 : 21);  // ????? (32 for 0, 66 for 1)
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    HAL_TIM_PWM_ConfigChannel(htim, &sConfigOC, TIM_CHANNEL_x);
+    HAL_TIM_PWM_Start(htim, TIM_CHANNEL_x);  // ?? PWM
+}
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim1;
@@ -54,9 +66,9 @@ void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 719;
+  htim1.Init.Prescaler = 1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 99;
+  htim1.Init.Period = 9999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -122,9 +134,9 @@ void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 7199;
+  htim2.Init.Prescaler = 554;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 9999;
+  htim2.Init.Period = 7199;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)

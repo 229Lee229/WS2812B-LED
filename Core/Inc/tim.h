@@ -30,7 +30,7 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 void WS2812_SetPulse(TIM_HandleTypeDef *htim, uint8_t bit);
-
+void LED_PWM_OUT(TIM_HandleTypeDef *htim, uint8_t pulse,uint32_t TIM_CHANNEL_x);
 /* USER CODE END Includes */
 
 extern TIM_HandleTypeDef htim1;

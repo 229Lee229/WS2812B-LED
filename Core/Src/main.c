@@ -98,6 +98,9 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint16_t pulse1 = 0;
+static bool toggle_strobe = false;
+static bool toggle_breath = false;
+static uint8_t breath_color = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (htim->Instance == TIM2) {
        TOGGLE_LED(); //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_5); // ??PA5??(LED)
@@ -147,6 +150,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //			pulse1++;	
 //			if(pulse1 == 20)	pulse1 = 0;
 //		}
+
+/*
 		if(Flash == 0){
 			WS2812_SetPulse(&htim1,pulse1++);
 		}
@@ -162,6 +167,73 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			Flash = 0;
 		}
 		
+*/
+
+	// Red
+	
+	if(toggle_breath == false){
+					if(breath_color == 0){
+						LED_PWM_OUT(&htim1,pulse1++,TIM_CHANNEL_1);
+						
+					}else if(breath_color == 1){
+						LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_2);
+						
+					}else if(breath_color == 2){
+						LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_3);
+						
+					}else if(breath_color == 3){
+						LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_4);
+					
+					}		
+	}else if(toggle_breath == true){
+					if(breath_color == 0){
+						LED_PWM_OUT(&htim1,pulse1--,TIM_CHANNEL_1);
+						
+					}else if(breath_color == 1){
+						LED_PWM_OUT(&htim3,pulse1--,TIM_CHANNEL_2);
+						
+					}else if(breath_color == 2){
+						LED_PWM_OUT(&htim3,pulse1--,TIM_CHANNEL_3);
+						
+					}else if(breath_color == 3){
+						LED_PWM_OUT(&htim3,pulse1--,TIM_CHANNEL_4);
+					
+					}			
+		
+	}
+	
+	if(toggle_breath == true && pulse1 == 0){
+		breath_color++;
+		if(breath_color == 4){
+			breath_color = 0;
+		}
+		toggle_breath = false;
+	}
+	
+	
+	if(breath_color == 0){
+		LED_PWM_OUT(&htim1,pulse1++,TIM_CHANNEL_1);
+		
+	}else if(breath_color == 1){
+		LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_2);
+		
+	}else if(breath_color == 2){
+		LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_3);
+		
+	}else if(breath_color == 3){
+		LED_PWM_OUT(&htim3,pulse1++,TIM_CHANNEL_4);
+	}
+	
+	if(pulse1 == 10){
+		breath_color++;
+		if(breath_color == 4)
+			breath_color = 0;
+		toggle_breath = true;
+	}
+	
+	
+	
+
     }
 	
 }
