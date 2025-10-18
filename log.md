@@ -2,6 +2,10 @@ Plan:	点灯, 测试按键控制
 
 
 
+
+
++   电源使用22V~24V, COB(RGBMA) 200W
+
 ### Questions
 
 +   如何在keil中使用_Static_assert()?
